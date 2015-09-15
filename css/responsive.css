@@ -1,0 +1,36 @@
+
+@media screen and (max-width: 1000px) {
+	.title-featured {
+		text-align: center;
+	}
+}
+
+@media screen and (max-width: 600px) {	
+	.headshot-container {
+		width: 100%;
+	}
+	.headshot {
+		display: block;
+		margin: auto;
+	}
+
+	.title-container {
+		width: 100%;
+		text-align: center;
+	}
+
+	.title-name {
+		font-size: 2.5em;
+	}
+
+	.title-subtitle {
+		font-size: 1.5em;
+	}
+
+}
+
+@media screen and (max-width: 400px) {
+	.contact-button {
+		bottom: 10px;
+	}
+}
