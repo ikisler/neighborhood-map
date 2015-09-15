@@ -1,3 +1,29 @@
+@media (max-width: 1000px) {
+	.location-title {
+		font-size: 1.1em;
+	}
+
+	.location-tag-title {
+		font-size: 0.9em;
+	}
+	.location-tag-item {
+		font-size: 0.9em;
+	}
+}
+
+@media (max-width: 500px) {
+	#map {
+		float: right;
+		height: 60%;
+		width: 100%;
+	}
+
+	#menu {
+		float: left;
+		height: 40%;
+		width: 100%;
+	}
+}
 
 @media screen and (max-width: 1000px) {
 	.title-featured {

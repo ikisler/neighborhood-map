@@ -1,219 +1,34 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/responsive.css">
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<script src="js/picturefill.min.js"></script>
-	<script src="js/knockout-3.3.0.js"></script>
-	<title>Things to do in San Jose, CA -- Isabeau Kisler</title>
-	<style type="text/css">
-		html, body { height: 100%; margin: 0; padding: 0; }
-		#map { height: 100%;}
-
-		#menu {
-			height: 100%;
-			width: 500px;
-		}
-	 </style>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/responsive.css">
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/picturefill.min.js"></script>
+		<script src="js/knockout-3.3.0.js"></script>
+		<title>Things to do in San Jose, CA -- Isabeau Kisler</title>
 	</head>
 	<body>
-	<div id="map"></div>
-	<div id="menu">
-		<ul data-bind="foreach: locationList">
-			<li data-bind="text: name"></li>
-			<li data-bind="text: address"></li>
-			<ul data-bind="foreach: tags" style="list-style-type:square;">
-				<li data-bind="text: $data" style="display:inline-block; padding-right:10px;"></li>
+		<div id="map"></div>
+		<div id="menu">
+			<div class="search-box-container">
+				<input class="search-box" type="text" data-bind="textInput: query, event: {keyup:search}" placeholder="Search">
+			</div>
+			<ul class="location-list" data-bind="foreach: locationList">
+				<div class="location-list-item" data-bind="click: $parent.selectFromList">
+					<li class="location-title" data-bind="text: name"></li>
+					<li class="location-address" data-bind="text: address"></li>
+					<li class="location-tag-title">Tags:<li>
+					<ul class="location-tag-list" data-bind="foreach: tags">
+						<li class="location-tag-item" data-bind="text: $data"></li>
+					</ul>
+				</div>
 			</ul>
-		</ul>
-	</div>
-
-	<script type="text/javascript">
-
-		var locations = [
-			{name: 'Rosicrucian Egyptian Museum',
-			address: '1660 Park Ave, San Jose, CA 95191',
-			tags: ['museum','kids','adults','cheap','indoors','educational'],
-			link: 'http://www.egyptianmuseum.org/',
-			selected: false,
-			marker: ''},
-
-			{name: 'San Jose Municipal Rose Garden',
-			address: 'Naglee Ave & Dana Ave San Jose, CA 95126',
-			tags: ['kids','adults','outdoors','nature', 'cheap'],
-			link: 'https://www.sanjoseca.gov/Facilities/Facility/Details/74',
-			selected: false,
-			marker: ''},
-
-			{name: 'Winchester Mystery House',
-			address: '525 S Winchester Blvd, San Jose, CA 95128',
-			tags: ['adults','indoors','educational'],
-			link: 'www.winchestermysteryhouse.com',
-			selected: false,
-			marker: ''},
-
-			{name: "Children's Discovery Museum of San Jose",
-			address: '180 Woz Way, San Jose, CA 95110',
-			tags: ['kids','museum','educational'],
-			link: 'https://www.cdm.org/',
-			selected: false,
-			marker: ''},
-
-			{name: 'Lick Observatory',
-			address: '7281 Mt Hamilton Rd, Mt Hamilton, CA 95140',
-			tags: ['educational', 'cheap', 'adults'],
-			link: 'http://www.ucolick.org/main/index.html',
-			selected: false,
-			marker: ''},
-
-			{name: 'Emma Prusch Farm Park',
-			address: '647 S King Rd, San Jose, CA 95116',
-			tags: ['kids', 'adults', 'outdoors', 'cheap'],
-			link: 'www.pruschfarmpark.org/',
-			selected: false,
-			marker: ''},
-
-			{name: 'The Tech Museum of Innovation',
-			address: '201 S Market St, San Jose, CA 95113',
-			tags: ['museum','adults','kids','educational'],
-			link: 'https://www.thetech.org',
-			selected: false,
-			marker: ''},
-
-			{name: 'Raging Waters',
-			address: '2333 South White Road, San Jose, CA 95148',
-			tags: ['adults','kids','outdoors'],
-			link: 'https://www.rwsplash.com',
-			selected: false,
-			marker: ''},
-
-			{name: 'Kelley Park',
-			address: '1300 Senter Rd, San Jose, CA 95112',
-			tags: ['outdoors','kids','adults','cheap'],
-			link: 'http://www.sanjoseca.gov/facilities/Facility/Details/175',
-			selected: false,
-			marker: ''},
-
-			{name: 'Happy Hollow Park & Zoo',
-			address: 'Story Road & Remillard, San Jose, CA 95112',
-			tags: ['kids','outdoors','educational'],
-			link: 'http://www.hhpz.org/',
-			selected: false,
-			marker: ''}
-	/***
-	Add These later:
-			{name: 'History Park at Kelley Park',
-			address: '635 Phelan Ave, San Jose, CA 95112',
-			tags: ['outdoors','indoors','museum','adults','kids','educational','cheap'],
-			link: 'http://historysanjose.org/wp/'},
-
-			{name: 'Japanese Friendship Garden at Kelley Park',
-			address: '1300 Senter Rd, San Jose, CA 95112',
-			tags: ['outdoors','cheap','adults','kids'],
-			link: 'http://www.sanjoseca.gov/facilities/Facility/Details/350'},
-	Template:
-			{name: '',
-			address: '',
-			tags: [],
-			link: ''}, */
-		];
-
-		var Location = function(data) {
-			this.name = ko.observable(data.name);
-			this.address = ko.observable(data.address);
-			this.tags = ko.observableArray(data.tags);
-			this.link = ko.observable(data.link);
-			this.selected = ko.observable(data.selected);
-			this.marker = ko.observable(data.marker);
-		};
-
-		var ViewModel = function() {
-			var that = this;
-
-			this.locationList = ko.observableArray([]);
-
-			for(var i=0; i<locations.length; i++) {
-				that.locationList.push(new Location(locations[i]));
-//				that.locationList()[i].marker(arrMarkers[i]);
-//				console.log(that.locationList()[i].marker());
-			}
-
-			this.currentSelected = ko.observable(this.locationList()[0]);
-
-			this.setSelected = function(clicked) {
-				that.currentSelected(clicked);
-			};
-
-			this.isSelected = function(i) {
-				return this.locationList()[i].selected();
-			};
-			//console.log(this.locationList()[0].selected());
-
-		};
-
-		ko.applyBindings(new ViewModel());
-
-		var initLocation = "San Jose, CA";
-
-		var map;
-		function initMap() {
-			geocoder = new google.maps.Geocoder();
-			// Create a new map and center on San Jose, CA
-			map = new google.maps.Map(document.getElementById('map'), {
-			center: {lat: 37.33, lng: -121.92},
-			zoom: 12
-			});
-
-			// Add map markers for each location
-			for(var i=0; i<locations.length; i++) {
-				// Use setTimeout to space out query requests, and avoid OVER_QUERY_LIMIT error
-				//window.setTimeout(codeAddress(locations[i].address, true), 200*i);		This doesn't work, putting it aside for now.
-				codeAddress(locations[i]);
-			}
-
-		}
-
-		var arrMarkers = [];
-
-		function codeAddress(thisLocation) 
-		{
-			geocoder.geocode( {address:thisLocation.address}, function(results, status) 
-			{
-				if (status == google.maps.GeocoderStatus.OK) {
-					var image = 'mapicons/star-3.png';
-
-					//map.setCenter(results[0].geometry.location); // Center the map over the result
-					// Place a map marker at the location, add an event listener
-					var marker = new google.maps.Marker(
-					{
-						map: map,
-						position: results[0].geometry.location,
-						title: thisLocation.name,
-					});
-
-					marker.addListener('click',function() {
-						this.setIcon('mapicons/star-3.png');
-						thisLocation.selected = true;
-						console.log(thisLocation.name + " " + thisLocation.selected);
-					});
-
-					thisLocation.marker = marker;
-					//thisLocation.marker(marker);
-					// Push the marker into an array
-					arrMarkers.push(marker);
-				} else {
-					console.log('Geocode was not successful for the following reason: ' + status);
-				}
-			});
-		}
-
-	</script>
-	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRyINs4-oEVVyIUgQ4qNB8QgVOA3G-oso&callback=initMap">
-	</script>
+		</div>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRyINs4-oEVVyIUgQ4qNB8QgVOA3G-oso"></script>
+	<script src="js/neighborhoodmap.js" type="text/javascript"></script>
 	</body>
 </html>
