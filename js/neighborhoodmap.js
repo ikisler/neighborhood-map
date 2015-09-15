@@ -1,118 +1,133 @@
-		var locations = [
-			{name: 'Rosicrucian Egyptian Museum',
-			address: '1660 Park Ave, San Jose, CA 95191',
-			tags: ['kids','adults','museum','educational','indoors','cheap'],
-			link: 'http://www.egyptianmuseum.org/',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+/*****
+"Neighborhood Map" by Isabeau Kisler
+Shows a searchable list of locations of interest in the San Jose area.
 
-			{name: 'San Jose Municipal Rose Garden',
-			address: 'Naglee Ave & Dana Ave San Jose, CA 95126',
-			tags: ['kids','adults','nature','outdoors', 'cheap'],
-			link: 'https://www.sanjoseca.gov/Facilities/Facility/Details/74',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+Project created for Udacity's Front End Nano-Degree using
+Knockout.js, jQuery, Google Maps API and the Wikipedia API.
 
-			{name: 'Winchester Mystery House',
-			address: '525 S Winchester Blvd, San Jose, CA 95128',
-			tags: ['adults','educational','indoors'],
-			link: 'www.winchestermysteryhouse.com',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+09/15
+*****/
+// Star icon from: Maps Icons Collection https://mapicons.mapsmarker.com
 
-			{name: "Children's Discovery Museum of San Jose",
-			address: '180 Woz Way, San Jose, CA 95110',
-			tags: ['kids','museum','educational','indoors'],
-			link: 'https://www.cdm.org/',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+var locations = [
+	{name: 'Rosicrucian Egyptian Museum',
+	address: '1660 Park Ave, San Jose, CA 95191',
+	tags: ['kids','adults','museum','educational','indoors','cheap'],
+	link: 'http://www.egyptianmuseum.org/',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
 
-			{name: 'Lick Observatory',
-			address: '7281 Mt Hamilton Rd, Mt Hamilton, CA 95140',
-			tags: ['adults','educational','cheap'],
-			link: 'http://www.ucolick.org/main/index.html',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+	{name: 'San Jose Municipal Rose Garden',
+	address: 'Naglee Ave & Dana Ave San Jose, CA 95126',
+	tags: ['kids','adults','nature','outdoors', 'cheap'],
+	link: 'https://www.sanjoseca.gov/Facilities/Facility/Details/74',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
 
-			{name: 'Emma Prusch Farm Park',
-			address: '647 S King Rd, San Jose, CA 95116',
-			tags: ['kids', 'adults', 'outdoors', 'cheap'],
-			link: 'www.pruschfarmpark.org/',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+	{name: 'Winchester Mystery House',
+	address: '525 S Winchester Blvd, San Jose, CA 95128',
+	tags: ['adults','educational','indoors'],
+	link: 'www.winchestermysteryhouse.com',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
 
-			{name: 'The Tech Museum of Innovation',
-			address: '201 S Market St, San Jose, CA 95113',
-			tags: ['kids','adults','museum','educational'],
-			link: 'https://www.thetech.org',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+	{name: "Children's Discovery Museum of San Jose",
+	address: '180 Woz Way, San Jose, CA 95110',
+	tags: ['kids','museum','educational','indoors'],
+	link: 'https://www.cdm.org/',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
 
-			{name: 'Raging Waters',
-			address: '2333 South White Road, San Jose, CA 95148',
-			tags: ['kids','adults','outdoors'],
-			link: 'https://www.rwsplash.com',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+	{name: 'Lick Observatory',
+	address: '7281 Mt Hamilton Rd, Mt Hamilton, CA 95140',
+	tags: ['adults','educational','cheap'],
+	link: 'http://www.ucolick.org/main/index.html',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
 
-			{name: 'Kelley Park',
-			address: '1300 Senter Rd, San Jose, CA 95112',
-			tags: ['kids','adults','outdoors','cheap'],
-			link: 'http://www.sanjoseca.gov/facilities/Facility/Details/175',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+	{name: 'Emma Prusch Farm Park',
+	address: '647 S King Rd, San Jose, CA 95116',
+	tags: ['kids', 'adults', 'outdoors', 'cheap'],
+	link: 'www.pruschfarmpark.org/',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
 
-			{name: 'History Park at Kelley Park',
-			address: '635 Phelan Ave, San Jose, CA 95112',
-			tags: ['kids','adults','museum','educational','outdoors','indoors','cheap'],
-			link: 'http://historysanjose.org/wp/',
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
+	{name: 'The Tech Museum of Innovation',
+	address: '201 S Market St, San Jose, CA 95113',
+	tags: ['kids','adults','museum','educational'],
+	link: 'https://www.thetech.org',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
 
-			{name: 'Happy Hollow Park & Zoo',
-			address: 'Story Road & Remillard, San Jose, CA 95112',
-			tags: ['kids','educational','outdoors'],
-			link: 'http://www.hhpz.org/',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''},
-/*	
-			{name: 'Japanese Friendship Garden at Kelley Park',
-			address: '1300 Senter Rd, San Jose, CA 95112',
-			tags: ['kids','adults','outdoors','cheap'],
-			link: 'http://www.sanjoseca.gov/facilities/Facility/Details/350',
-			selected: false,
-			marker: '',
-			wikiSnippet: '',
-			infowindow: ''}
-*/
+	{name: 'Raging Waters',
+	address: '2333 South White Road, San Jose, CA 95148',
+	tags: ['kids','adults','outdoors'],
+	link: 'https://www.rwsplash.com',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
+
+	{name: 'Kelley Park',
+	address: '1300 Senter Rd, San Jose, CA 95112',
+	tags: ['kids','adults','outdoors','cheap'],
+	link: 'http://www.sanjoseca.gov/facilities/Facility/Details/175',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
+
+	{name: 'History Park at Kelley Park',
+	address: '635 Phelan Ave, San Jose, CA 95112',
+	tags: ['kids','adults','museum','educational','outdoors','indoors','cheap'],
+	link: 'http://historysanjose.org/wp/',
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
+
+	{name: 'Happy Hollow Park & Zoo',
+	address: 'Story Road & Remillard, San Jose, CA 95112',
+	tags: ['kids','educational','outdoors'],
+	link: 'http://www.hhpz.org/',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''},
+
+	{name: 'Japanese Friendship Garden (Kelley Park)',
+	address: '1300 Senter Rd, San Jose, CA 95112',
+	tags: ['kids','adults','outdoors','cheap'],
+	link: 'http://www.sanjoseca.gov/facilities/Facility/Details/350',
+	selected: false,
+	marker: '',
+	wikiSnippet: '',
+	infowindow: ''}
+];
 	/***
 	Template:
 			{name: '',
 			address: '',
 			tags: [],
-			link: ''}, */
-		];
+			link: '',
+			selected: false,
+			marker: '',
+			wikiSnippet: '',
+			infowindow: ''},
+	***/
 
 		var Location = function(data) {
 			this.name = ko.observable(data.name);
@@ -135,20 +150,19 @@
 			this.map;
 
 			var initialize = function() {
-				// POPULATE locationList
+				// Populate locationList
 				for(var i=0; i<locations.length; i++) {
 				that.locationList.push(new Location(locations[i]));
 				}
 
+				// Get data from Wikipedia, populate locationList with the info
 				that.getWikiData();
 				
-				// CREATE map
-				// CREATE markers
-				// POPULATE locationList w/ markers
+				// Create the map, markers, and populate locationList with markers and infowindows
 				createMap();
 			}
 
-
+			// Gets data from Wikipedia, populates locationList with wikiSnippets
 			this.getWikiData = function() {
 				var wikiQuery;
 
@@ -158,7 +172,7 @@
 					$.ajax({url: wikiQuery,
 				        dataType:'jsonp',
 				        success: function(data) {
-
+				        	// Go through the list and find the correct item, then add the wikiSnippet data
 				        	for(var i=0; i<that.locationList().length; i++) {
 				        		if(data[1][0] == that.locationList()[i].name()) {
 				        			that.locationList()[i].wikiSnippet(data[2][0]);
@@ -169,16 +183,19 @@
 				        }
 				    });
 				}
-
-/****		Move this entire section up into the for loop above: ******/
+				// If the wikiRequest times out, then display a message with a link to the Wikipedia page.
 			    var wikiRequestTimeout = setTimeout(function() {
-			    	console.log("FAIL");
+			    	var phrase = 'Unable to access Wikipedia.  Please check your internet connection, or try clicking here: <a href="';
+			    	var wikiLink = 'https://en.wikipedia.org/wiki/';
 
-			        //$wikiElem.text('Failed to get Wikipedia resources');
+					for(var i=0; i<that.locationList().length; i++) {
+						that.locationList()[i].wikiSnippet(phrase + wikiLink + that.locationList()[i].name() + '" target="_blank">' + that.locationList()[i].name() + '</a>');
+				    }
 			    }, 8000);
 
 			};
 
+			// Creates the map, calls the codeAddress function to add markers, infowindows
 			var createMap = function() {
 				geocoder = new google.maps.Geocoder();
 				// Create a new map and center on San Jose, CA
@@ -187,24 +204,31 @@
 				zoom: 11
 				});
 
-				// Wait long enough for the Wikipedia information to load and be ready for infowindows
+				/*** What's going on here?! ***/
+				// This setTimeout is to give the Wikipedia queries enough time to come back with information before assigning them to a marker.
 				setTimeout(function() {
-					// Add map markers for each location
-					for(var i=0; i<that.locationList().length; i++) {
-						// Use setTimeout to space out query requests, and avoid OVER_QUERY_LIMIT error
-						//setTimeout(that.codeAddress(that.locationList()[i]), 1000 * i);
-						that.codeAddress(that.locationList()[i]);
+					// To avoid the OVER_QUERY_LIMIT error, Google Maps requires spacing out queries when you have 10 or more.
+					
+					/*** IMPORTANT!
+						This is currently set up to take 20 or less locations.  If, in the future, there are more locations added, this may have to be adjusted.
+					***/
+
+					// This loop places the first 10 markers
+					for(var i=0; i<10; i++) {
+							that.codeAddress(that.locationList()[i]);
 					}
 
-					// Try this approach:
-					//	http://rizsharif.blogspot.com/2010/10/recursion-settimeout-to-simulate-pause.html
-					//	https://discussions.udacity.com/t/how-do-i-troubleshoot-google-map-problems-when-there-are-no-errors-in-console/25256/5?u=ikisler
-
-
+					// This setTimeout allows 1 second to go by, then places the rest of the markers.
+					setTimeout(function() {
+						for(var i=10; i<that.locationList().length; i++) {
+							that.codeAddress(that.locationList()[i]);
+						}
+					}, 1000);
 				}, 1000);
+
 			};
 
-			// Adds markers to map
+			// Add marker to map, assign click listener and infowindow to it
 			this.codeAddress = function(thisLocation) {
 				geocoder.geocode( {address:thisLocation.address()}, function(results, status) 
 				{
@@ -252,8 +276,8 @@
 				var contentString = '<div id="content" style="color:black;">'+
 				    '<div id="siteNotice">'+
 				    '</div>'+
-				    '<h1 id="firstHeading" class="firstHeading">' + marker.title +'</h1>'+
-				    '<div id="bodyContent">'+
+				    '<h1 id="first-heading" class="first-heading">' + marker.title +'</h1>'+
+				    '<div id="body-content">'+
 				    '<div class="wiki-snip">' + thisLocation.wikiSnippet() + '</div>' +
 				    '</div>'+
 				    '</div>';
@@ -264,8 +288,14 @@
 				return infowindow;
 			};
 
-			this.select = function(marker) {
+			// Show both the marker AND the location-list-item as selected
+			this.selectFromList = function(index) {
+				that.selectMarker(index.marker());
+				that.highlightListItem(index.name());
+			};
 
+			// Selects the desired marker on the map by changing it's icon into a star
+			this.selectMarker = function(marker) {
 				var infoWin;
 
 				// Iterate through the locations.
@@ -281,6 +311,7 @@
 						infoWin.close(map, marker);
 					// Put the star icon and open the info window for the selected marker
 					} else {
+						// Star icon from: Maps Icons Collection https://mapicons.mapsmarker.com
 						marker.setIcon('mapicons/star-3.png');
 						infoWin = that.locationList()[i].infowindow();
 						infoWin.open(map, marker);
@@ -289,12 +320,7 @@
 				}
 			};
 
-			this.selectFromList = function(index) {
-				that.select(index.marker());
-
-				that.highlightListItem(index.name());
-			};
-
+			// Highlight the desired item from location-list-item
 			this.highlightListItem = function(selectedName) {
 				var locationListItems = document.getElementsByClassName('location-list-item');
 
@@ -317,86 +343,35 @@
 					// Go to the next location-list-item
 					locationListItems = locationListItems.next();
 				}
-
-				// Shitty javascript-only version
-/*				for(var i=0; i<locationListItems.length; i++) {
-					// If it is selected, deselect it
-					if(locationListItems[i].className.search('item-selected') > 0) {
-						// will have to fix this later, with the addition of the search function
-						locationListItems[i].className = locationListItems[i].className.slice(0, locationListItems[i].className.search('item-selected'));
-					}
-					// Use both innerText and textContent for browser compatibility
-					if(locationListItems[i].firstElementChild.innerText === selectedName || locationListItems[i].firstElementChild.textContent === selectedName) {
-						locationListItems[i].className = locationListItems[i].className + ' item-selected';
-					}
-
-				} */
-				
-				/*
-				for( all the items in .location-list )
-					remove the item-selected class
-
-					if(the name of this item is the same as the selectedName)
-						add the item-selected class
-				*/
-
-				/*
-				var locationListElement = $('.location-list');
-				var strTemp = '';
-
-				for(var i=0; i<locationListItems.length; i++) {
-					strTemp = '.location-list:nth-child(' + (i+1) + ')';
-
-					console.log($('ul:first-child'));
-					//console.log($(strTemp).first().text());
-					//console.log($('.location-list:nth-child(1)'));
-
-					//$(strTemp).first().removeClass('item-selected');
-
-					//if($(strTemp).first().text() === selectedName) {
-						$(strTemp).addClass('item-selected');
-					//}
-				}
-
-				//locationListItems = $('location-list').first();
-
-// structure:
-//				location-list
-//					location-list-item
-//						name
-/*
-	Get the location-list object, then use nth-child to access each location-list-item.  Use first().text() to get name of item.
-*/
 			};
 
+			// Filters the showing location-list-items and markers.  This is data-binded to the Search box ('.search-box') to activate on keyup.
+			// Searches the location-list-item name and tags for matches.
 			this.search = function() {
-				//	http://codepen.io/prather-mcs/pen/KpjbNN
-				//	https://discussions.udacity.com/t/knockout-form-and-search-bar/29018/7
-
-				// Put the query into lowercase, for easy searching
+				// Put the query into lowercase
 				var queryLowerCase = that.query().toLowerCase();
 				// Grab the first location-list-item
 				var locationListItems = $('.location-list-item').first();
 				// Get the number of location-list-items for the loop
 				var numLocationListItems = $('.location-list-item').toArray().length;
 
-				/**** IMPORTANT!
+				/*** IMPORTANT!
 					This takes advantage of the fact that both the locationList and the location-list-items are in the same order, thus sharing index numbers.
 					If some future addition changes this, then adjustments will need to be made.
-				****/
+				***/
 
 				// Loop through location-list-items
 				for(var i=0; i<numLocationListItems; i++) {
 					// If the item's hidden, reveal it
 					if(locationListItems.hasClass('item-hidden')) {
 						locationListItems.removeClass('item-hidden');
-						// Set the marker to being visible
+						// Set the marker to visible
 						that.locationList()[i].marker().setVisible(true);
 					}
 					// If the item name or tags don't match the query, hide it
 					if(locationListItems.children('.location-title').text().toLowerCase().search(queryLowerCase) < 0 && locationListItems.find('.location-tag-item').text().search(queryLowerCase) < 0) {
 						locationListItems.addClass('item-hidden');
-						// Set the marker to being invisible
+						// Set the marker to invisible
 						that.locationList()[i].marker().setVisible(false);
 						// Close the infowindow, if opened
 						that.locationList()[i].infowindow().close(map, that.locationList()[i].marker());
@@ -405,25 +380,6 @@
 					// Go to the next location-list-item
 					locationListItems = locationListItems.next();
 				}
-/*	Beautiful, flawed javascript-only version
-				var locationListItems = document.getElementsByClassName('location-list-item');
-				for(var i=0; i<locationListItems.length; i++) {
-					// If it doesn't match, reveal it:
-					if(locationListItems[i].className.search('item-hidden') > 0) {
-						// will have to fix this later, with the addition of the search function
-						locationListItems[i].className = locationListItems[i].className.slice(0, locationListItems[i].className.search('item-hidden'));
-						// Set the marker to being visible
-						that.locationList()[i].marker().setVisible(true);
-					}
-					// Use both innerText and textContent for browser compatibility
-					if(locationListItems[i].firstElementChild.innerText.toLowerCase().search(queryLowerCase) < 0 || locationListItems[i].firstElementChild.textContent.toLowerCase().search(queryLowerCase) < 0 ) {
-						console.log("BING");
-						locationListItems[i].className = locationListItems[i].className + ' item-hidden';
-						// Set the marker to being invisible
-						that.locationList()[i].marker().setVisible(false);
-					}
-				}
-*/
 			};
 
 			this.initializeTHAT = initialize();

@@ -1,6 +1,6 @@
 html,
 body {
-	background: #e1effd;
+	background-color: #e1effd;
 	color: #03274b;
 	height: 100%;
 	margin: 0;
@@ -8,12 +8,37 @@ body {
 	font-family: sans-serif;
 }
 
+/*** MAP and INFOWINDOW ***/
 #map {
 	float: left;
 	height: 100%;
 	width:70%;
 }
 
+#first-heading {
+	background-color: #4a8fd1;
+	color: #fff;
+	padding: 5px 10px;
+	margin: 1px;
+	border-radius: 2px;
+}
+
+#body-content {
+	color: #03274b;
+	padding: 10px;
+	font-size: 1.2em;
+	border-radius: 2px 2px 0 0;
+	height: 100%;
+}
+
+.gm-style-iw {
+	width: 350px;
+	top: 1px !important;
+	left: 1px !important;
+	border-radius: 2px 2px 0 0;	
+}
+
+/*** MENU ***/
 #menu {
 	float: right;
 	max-height: 1000px;
@@ -67,7 +92,7 @@ body {
 }
 
 .item-selected {
-	background-color: #4A8FD1;
+	background-color: #4a8fd1;
 	color: #fff;
 }
 
