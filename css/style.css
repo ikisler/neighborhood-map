@@ -8,14 +8,15 @@ body {
 	font-family: sans-serif;
 }
 
-/*** MAP and INFOWINDOW ***/
+/*** Map ***/
 #map {
 	float: left;
 	height: 100%;
 	width:70%;
 }
 
-#first-heading {
+/*** Infowindow ***/
+.first-heading {
 	background-color: #4a8fd1;
 	color: #fff;
 	padding: 5px 10px;
@@ -23,22 +24,19 @@ body {
 	border-radius: 2px;
 }
 
-#body-content {
+.body-content {
 	color: #03274b;
 	padding: 10px;
 	font-size: 1.2em;
-	border-radius: 2px 2px 0 0;
-	height: 100%;
 }
 
 .gm-style-iw {
 	width: 350px;
 	top: 1px !important;
 	left: 1px !important;
-	border-radius: 2px 2px 0 0;	
 }
 
-/*** MENU ***/
+/*** Menu ***/
 #menu {
 	float: right;
 	max-height: 1000px;
@@ -72,13 +70,13 @@ body {
 }
 
 .location-list-item {
-	padding: 0 0 10px 15px;
+	padding: 10px 0 10px 15px;
 	border-bottom: 1px solid #fff;
+	cursor: pointer;
 }
 
 .location-title {
 	font-size: 1.2em;
-	padding-top: 10px;
 }
 
 .location-address {

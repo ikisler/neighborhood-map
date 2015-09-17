@@ -40,7 +40,7 @@ var locations = [
 	wikiSnippet: '',
 	infowindow: ''},
 
-	{name: "Children's Discovery Museum of San Jose",
+	{name: "Children's Discovery Museum of San Jose",	// Using double quotes here due to the single in Children's
 	address: '180 Woz Way, San Jose, CA 95110',
 	tags: ['kids','museum','educational','indoors'],
 	link: 'https://www.cdm.org/',
@@ -160,6 +160,8 @@ var ViewModel = function() {
 		that.locationList.push(new Location(locations[i]));
 		}
 
+		that.locationListLength = that.locationList().length;
+
 		// Get data from Wikipedia, populate locationList with the info
 		that.getWikiData();
 		
@@ -172,31 +174,31 @@ var ViewModel = function() {
 		var wikiQuery;
 
 		// If the wikiRequest times out, then display a message with a link to the Wikipedia page.
-	    var wikiRequestTimeout = setTimeout(function() {
-	    	var phrase = 'Unable to access Wikipedia.  Please check your internet connection, or try clicking here: <a href="';
-	    	var wikiLink = 'https://en.wikipedia.org/wiki/';
+		var wikiRequestTimeout = setTimeout(function() {
+			var phrase = 'Unable to access Wikipedia.  Please check your internet connection, or try clicking here: <a href="';
+			var wikiLink = 'https://en.wikipedia.org/wiki/';
 
-			for(var i=0; i<that.locationList().length; i++) {
+			for(var i=0; i<that.locationListLength; i++) {
 				that.locationList()[i].wikiSnippet(phrase + wikiLink + that.locationList()[i].name() + '" target="_blank">' + that.locationList()[i].name() + '</a>');
-		    }
-	    }, 1000);
+			}
+		}, 1000);
 
-		for(var i=0; i<that.locationList().length; i++) {
+		for(var i=0; i<that.locationListLength; i++) {
 			wikiQuery = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + that.locationList()[i].name() + '&srproperties=snippet&format=json&callback=wikiCallback';
 
 			$.ajax({url: wikiQuery,
-		        dataType:'jsonp',
-		        success: function(data) {
-		        	// Go through the list and find the correct item, then add the wikiSnippet data
-		        	for(var i=0; i<that.locationList().length; i++) {
-		        		if(data[1][0] == that.locationList()[i].name()) {
-		        			that.locationList()[i].wikiSnippet(data[2][0]);
-		        		}
-		        	}
+				dataType:'jsonp',
+				success: function(data) {
+					// Go through the list and find the correct item, then add the wikiSnippet data
+					for(var i=0; i<that.locationListLength; i++) {
+						if(data[1][0] == that.locationList()[i].name()) {
+							that.locationList()[i].wikiSnippet(data[2][0]);
+						}
+					}
 
-		            clearTimeout(wikiRequestTimeout);
-		        }
-		    });
+					clearTimeout(wikiRequestTimeout);
+				}
+			});
 		}
 		
 
@@ -227,7 +229,7 @@ var ViewModel = function() {
 
 			// This setTimeout allows 1 second to go by, then places the rest of the markers.
 			setTimeout(function() {
-				for(var i=10; i<that.locationList().length; i++) {
+				for(var i=10; i<that.locationListLength; i++) {
 					that.codeAddress(that.locationList()[i]);
 				}
 			}, 1000);
@@ -256,7 +258,7 @@ var ViewModel = function() {
 				tempInfowindow = that.addInfowindow(thisLocation, marker);
 
 				// Put each marker and infowindow into it's associated object
-				for(var i=0; i<that.locationList().length; i++) {
+				for(var i=0; i<that.locationListLength; i++) {
 					if(marker.title === that.locationList()[i].name()) {
 						that.locationList()[i].marker(marker);
 						that.locationList()[i].infowindow(tempInfowindow);
@@ -282,7 +284,7 @@ var ViewModel = function() {
 				tempInfowindow = that.addInfowindow(thisLocation, marker);
 
 				// Put each marker and infowindow into it's associated object
-				for(var i=0; i<that.locationList().length; i++) {
+				for(var i=0; i<that.locationListLength; i++) {
 					if(marker.title === that.locationList()[i].name()) {
 						that.locationList()[i].marker(marker);
 						that.locationList()[i].infowindow(tempInfowindow);
@@ -305,20 +307,20 @@ var ViewModel = function() {
 	// Adds infowindow to markers
 	this.addInfowindow = function(thisLocation, marker) {
 		// Check to see if there were problems with geocoder, and add a special note if there was
-		var geocoderError = "";
+		var geocoderError = '';
 
 		if(marker.getPosition().lat()===that.defaultLocation.lat && marker.getPosition().lng()===that.defaultLocation.lng) {
-			geocoderError = "<p>Please note that there was an error, and this map location does not reflect the actual location of the attraction.</p>"
+			geocoderError = '<p>Please note that there was an error, and this map location does not reflect the actual location of the attraction.</p>';
 		}
 
-		var contentString = '<div id="content" style="color:black;">'+
-		    '<div id="siteNotice">'+
-		    '</div>'+
-		    '<h1 id="first-heading" class="first-heading">' + marker.title +'</h1>'+
-		    '<div id="body-content">'+
-		    '<div class="wiki-snip">' + thisLocation.wikiSnippet() + '</div>' + geocoderError +
-		    '</div>'+
-		    '</div>';
+		var contentString = '<div id="content">'+
+			'<div id="siteNotice">'+
+			'</div>'+
+			'<h1 class="first-heading">' + marker.title +'</h1>'+
+			'<div class="body-content">'+
+			'<div class="wiki-snip">' + thisLocation.wikiSnippet() + '</div>' + geocoderError +
+			'</div>'+
+			'</div>';
 		var infowindow = new google.maps.InfoWindow({
 			content: contentString
 		});
@@ -337,7 +339,7 @@ var ViewModel = function() {
 		var infoWin;
 
 		// Iterate through the locations.
-		for(var i=0; i<that.locationList().length; i++) {
+		for(var i=0; i<that.locationListLength; i++) {
 			// De-select the other markers, assign them the default icon, and close the open infowindow.
 			if(that.locationList()[i].name() != marker.title) {
 				// Set selected to false
