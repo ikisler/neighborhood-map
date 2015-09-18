@@ -2,7 +2,7 @@
 "Neighborhood Map" by Isabeau Kisler
 Shows a searchable list of locations of interest in the San Jose, CA area.
 
-Project created for Udacity's Front End Nano-Degree using
+Project created for Udacity's Front-End Nano-Degree using
 Knockout.js, jQuery, Google Maps API and the Wikipedia API.
 
 Oddities and fiddly-bits are labeled with the tag IMPORTANT!
