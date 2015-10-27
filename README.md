@@ -4,6 +4,9 @@
 
 Shows a searchable list of locations of interest in the San Jose, CA area.
 
+###The Project
+A single-page web application, built using the Knockout framework, that displays a Google Map of an area and various points of interest. Users can search all included landmarks and, when selected, additional information about a landmark is presented from the Wikipedia API.
+
 ###Running the Program
 Download the folder and all its files, then double click on 'index.html'.
 **OR**
